@@ -47,6 +47,10 @@ def main_function():
             print("\nCongratulations!\nYou have guessed the correct number.\n")
             answer = 'correct'
 
+        elif 0 > user_number or user_number > 100:
+                print("\nInputs should range from 0 to 100 only. Press any key to continue.")
+                msvcrt.getch()
+
         else:
             if user_number > random_number:
                 print("\nNice try. \nHint: Your number is greater than the unknown number. Press any key to try again.")
@@ -55,5 +59,6 @@ def main_function():
             elif user_number < random_number:
                 print("\nGood guess. \nHint: Your number is less than the unknown number. Press any key to try again.")
                 msvcrt.getch()
+
 
 main_function()
