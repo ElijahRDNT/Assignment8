@@ -57,7 +57,7 @@ def input_validation(user_input1, user_input2, user_input3):
 
 
 def loading_animation():
-    for i in range (0,5):
+    for i in range (0,7):
         sys.stdout.write('\rLoading . . .')
         time.sleep(0.1)
         sys.stdout.write('\rLoading · . .')
@@ -94,8 +94,10 @@ def lottery_main():
 
             else:
                 print("\nResult:  You lost.\nBetter luck next time :)")
+                print("Correct Numbers (in no particular order): " + str(lottery_numA) + ", " + str(lottery_numB) + ", and " + str(lottery_numC))
 
             start_lottery = input("\nDo you want to try again? (Y or N):  ")
+
             if start_lottery[0] == 'y':
                 loading_animation()
             
@@ -104,5 +106,6 @@ def lottery_main():
 
             else:
                 print("Invalid input. Game is terminated.")
+
 
 lottery_main()
