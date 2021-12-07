@@ -16,24 +16,43 @@ def system_header():
     print("               The random number will not change all throughout the game.")
 
 
+def input_validation(user_input1):
+    if user_input1 != "":
+        try:
+            int_input1 = int(user_input1)
+            return int_input1
+        
+        except ValueError:
+            print("\nERROR: Any inputs (characters/symbols) except numbers are invalid.")
+            return False
+            
+    else:
+        print("\nEmpty input is invalid.")
+        return False
+
+
 def main_function():
     random_number = random.randint(0,100)
     answer = 'wrong'
     while answer == 'wrong':
         os.system('cls')
         system_header()
-        number_input = int(input("\n\nWhat do you think is the number? (0-100):  "))
+        number_input = input("\n\nWhat do you think is the number? (0-100):  ")
+        user_number = input_validation(number_input)
+        if user_number is False:
+            print("Please avoid unnecessary inputs. Press any key to continue.")
+            msvcrt.getch()
 
-        if number_input == random_number:
+        elif user_number == random_number:
             print("\nCongratulations!\nYou have guessed the correct number.\n")
             answer = 'correct'
 
         else:
-            if number_input > random_number:
+            if user_number > random_number:
                 print("\nNice try. \nHint: Your number is greater than the unknown number. Press any key to try again.")
                 msvcrt.getch()
 
-            elif number_input < random_number:
+            elif user_number < random_number:
                 print("\nGood guess. \nHint: Your number is less than the unknown number. Press any key to try again.")
                 msvcrt.getch()
 
