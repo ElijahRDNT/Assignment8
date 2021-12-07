@@ -24,11 +24,30 @@ def generate_number():
 
 
 def get_input():
-    num1_input = int(input("\nEnter first number (0-9):  "))
-    num2_input = int(input("Enter second number (0-9):  "))
-    num3_input = int(input("Enter third number (0-9):  "))
+    num1_input = input("\nEnter first number (0-9):  ")
+    num2_input = input("Enter second number (0-9):  ")
+    num3_input = input("Enter third number (0-9):  ")
 
     return num1_input, num2_input, num3_input
+
+
+def input_validation(user_input1, user_input2, user_input3):
+    if user_input1 != "" and user_input2 != "" and user_input3 != "" :
+        try:
+            int_input1 = int(user_input1)
+            int_input2 = int(user_input2)
+            int_input3 = int(user_input3)
+
+            return int_input1, int_input2, int_input3
+        
+        except ValueError:
+            print("\nERROR: Invalid input. Game is terminated.\n")
+            return False, False, False
+
+    else:
+        print("\nEmpty input is invalid.\n")
+        return False, False, False
+
 
 def lottery_main():
     start_lottery = 'yes'
@@ -36,22 +55,26 @@ def lottery_main():
         system_header()
         lottery_numA, lottery_numB, lottery_numC = generate_number()
         user_num1, user_num2, user_num3 = get_input()
-
-        if ((user_num1 == lottery_numA and user_num2 == lottery_numB and user_num3 == lottery_numC) or
-            (user_num1 == lottery_numA and user_num2 == lottery_numC and user_num3 == lottery_numB) or
-            (user_num1 == lottery_numB and user_num2 == lottery_numA and user_num3 == lottery_numC) or
-            (user_num1 == lottery_numB and user_num2 == lottery_numC and user_num3 == lottery_numA) or
-            (user_num1 == lottery_numC and user_num2 == lottery_numA and user_num3 == lottery_numB) or
-            (user_num1 == lottery_numC and user_num2 == lottery_numB and user_num3 == lottery_numA)):
-            print("\nResult:  Winner\nCongratulations!")
+        valid_num1, valid_num2, valid_num3 = input_validation(user_num1, user_num2, user_num3)
+        if ((valid_num1 is False) or (valid_num2 is False) or (valid_num3 is False)):
+            break
 
         else:
-            print("\nResult:  You lost.\nBetter luck next time :)")
+            if ((valid_num1 == lottery_numA and valid_num2 == lottery_numB and valid_num3 == lottery_numC) or
+                (valid_num1 == lottery_numA and valid_num2 == lottery_numC and valid_num3 == lottery_numB) or
+                (valid_num1 == lottery_numB and valid_num2 == lottery_numA and valid_num3 == lottery_numC) or
+                (valid_num1 == lottery_numB and valid_num2 == lottery_numC and valid_num3 == lottery_numA) or
+                (valid_num1 == lottery_numC and valid_num2 == lottery_numA and valid_num3 == lottery_numB) or
+                (valid_num1 == lottery_numC and valid_num2 == lottery_numB and valid_num3 == lottery_numA)):
+                print("\nResult:  Winner\nCongratulations!")
 
-        start_lottery = input("\nDo you want to try again? (Y or N):  ")
-        
-        if start_lottery[0] == 'n':
-            print("Thank you for playing!\n")
+            else:
+                print("\nResult:  You lost.\nBetter luck next time :)")
+
+            start_lottery = input("\nDo you want to try again? (Y or N):  ")
+            
+            if start_lottery[0] == 'n':
+                print("Thank you for playing!\n")
 
 
 lottery_main()
