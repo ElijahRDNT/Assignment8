@@ -8,6 +8,9 @@
 # if “n” the program will exit.
 
 import random
+import sys
+import time
+import os
 
 def system_header():
     print("\n                         ***   Welcome to the LOTTERY   ***")
@@ -37,8 +40,12 @@ def input_validation(user_input1, user_input2, user_input3):
             int_input1 = int(user_input1)
             int_input2 = int(user_input2)
             int_input3 = int(user_input3)
+            if (0 >  int_input1 or int_input1 > 9) or (0 > int_input2 or int_input2 > 9) or (0 > int_input3 or int_input3 > 9 ):
+                print("\nInputs should not be less than 0 or greater than 9. Try again.\n")
+                return None, None, None
 
-            return int_input1, int_input2, int_input3
+            else:
+                return int_input1, int_input2, int_input3
         
         except ValueError:
             print("\nERROR: Invalid input. Game is terminated.\n")
@@ -49,15 +56,32 @@ def input_validation(user_input1, user_input2, user_input3):
         return False, False, False
 
 
+def loading_animation():
+    for i in range (0,5):
+        sys.stdout.write('\rLoading . . .')
+        time.sleep(0.1)
+        sys.stdout.write('\rLoading · . .')
+        time.sleep(0.1)
+        sys.stdout.write('\rLoading . · .')
+        time.sleep(0.1)
+        sys.stdout.write('\rLoading . . ·')
+        time.sleep(0.1)
+
+
 def lottery_main():
     start_lottery = 'yes'
     while start_lottery[0] == 'y':
+        os.system('cls')
         system_header()
         lottery_numA, lottery_numB, lottery_numC = generate_number()
         user_num1, user_num2, user_num3 = get_input()
         valid_num1, valid_num2, valid_num3 = input_validation(user_num1, user_num2, user_num3)
         if ((valid_num1 is False) or (valid_num2 is False) or (valid_num3 is False)):
             break
+
+        elif ((valid_num1 == None) or (valid_num2 == None) or (valid_num3 == None)):
+            start_lottery = 'yes'
+            loading_animation()
 
         else:
             if ((valid_num1 == lottery_numA and valid_num2 == lottery_numB and valid_num3 == lottery_numC) or
@@ -72,9 +96,13 @@ def lottery_main():
                 print("\nResult:  You lost.\nBetter luck next time :)")
 
             start_lottery = input("\nDo you want to try again? (Y or N):  ")
+            if start_lottery[0] == 'y':
+                loading_animation()
             
-            if start_lottery[0] == 'n':
+            elif start_lottery[0] == 'n':
                 print("Thank you for playing!\n")
 
+            else:
+                print("Invalid input. Game is terminated.")
 
 lottery_main()
